@@ -1,0 +1,6 @@
+development:
+  sessions:
+    default:
+      database: kbtu_chess
+      hosts:
+        - localhost:27017

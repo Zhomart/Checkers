@@ -1,6 +1,8 @@
 require File.expand_path('../config/environment', __FILE__)
 
-use Rack::Static, :urls => ["/css", '/images'], :root => 'public', :index => 'public/index.html'
+use Zhomart::AssetStylus
+
+use Rack::Static, :urls => ["/css", '/images'], :root => 'public', :index => 'index.html'
 
 use Rack::Logger
 

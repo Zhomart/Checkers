@@ -11,6 +11,8 @@ GEM
     builder (3.0.3)
     daemons (1.1.9)
     eventmachine (1.0.0)
+    execjs (1.4.0)
+      multi_json (~> 1.0)
     grape (0.2.2)
       activesupport
       hashie (~> 1.2)
@@ -38,10 +40,15 @@ GEM
       rack (>= 1.0.0)
     shotgun (0.9)
       rack (>= 1.0)
+    stylus (0.6.2)
+      execjs
+      stylus-source
+    stylus-source (0.29.0)
     thin (1.5.0)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
+    tilt (1.3.3)
     tzinfo (0.3.33)
     virtus (0.5.2)
       backports (~> 2.6.1)
@@ -53,4 +60,6 @@ DEPENDENCIES
   grape
   mongoid
   shotgun
+  stylus
   thin
+  tilt

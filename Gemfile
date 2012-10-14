@@ -9,3 +9,7 @@ gem 'grape'
 
 # development only. It reloads source code
 gem "shotgun"
+
+gem "stylus"
+
+gem "tilt"

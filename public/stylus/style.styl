@@ -1,16 +1,31 @@
-.checkers {
-  border:1px solid red;
+cell_size = 60px
+
+.checkers
+  float left
+  border 1px solid #111
+  width cell_size * 8
+
+
+.checkers .cell
+  float left
+  width cell_size
+  height cell_size
+  overflow hidden
+  background-color #fafafa
+
+.checkers div:nth-child(-2n+8),
+.checkers div:nth-child(8) ~ div:nth-child(-2n+15),
+.checkers div:nth-child(16) ~ div:nth-child(-2n+24),
+.checkers div:nth-child(24) ~ div:nth-child(-2n+31),
+.checkers div:nth-child(32) ~ div:nth-child(-2n+40),
+.checkers div:nth-child(40) ~ div:nth-child(-2n+47),
+.checkers div:nth-child(48) ~ div:nth-child(-2n+56),
+.checkers div:nth-child(56) ~ div:nth-child(-2n+63) {
+    background-color: #333;
 }
 
-.checkers .cell {
-  float: left;
-  width: 60px;
-  height: 60px;
-  overflow: hidden;
-  background-color: #333;
-}
+.b-red
+  border 1px solid red
 
-.checkers .cell:nth-child(odd) { background-color: #ddd; }
-
-.b-red {border:1px solid red;}
-.b-green {border:1px solid green;}
+.b-green
+  border 1px solid green

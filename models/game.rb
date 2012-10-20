@@ -1,6 +1,9 @@
 class Game
   include Jongoid::Document
 
+  field :user_id
+  field :title
+
   field :board
   field :current_player
 
@@ -15,6 +18,14 @@ class Game
     end
 
     self.current_player = rand(2) + 1
+  end
+
+  def user
+    User.find(user_id)
+  end
+
+  def to_json(*a)
+    to_hash.merge({ user: user }).to_json(*a)
   end
 
 end

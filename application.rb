@@ -5,6 +5,8 @@ require 'bundler/setup'
 
 Bundler.require :default
 
+require 'active_support/core_ext/numeric/time'
+
 # Load any libraries
 Dir["#{File.dirname(__FILE__)}/lib/**/*.rb"].each { |f| require f }
 
@@ -41,10 +43,12 @@ module Checkers
     # use Goliath::Rack::Validation::RequiredParam, {:key => 'action'}  # must provide ?echo= query or body param
 
     route "/sign_in", :sign_in
+    route "/game_list", :game_list
     route "/new_game", :new_game
-    route "/save_game", :save_game
-    route "/recv", :action_recv
-    route "/send", :action_send
+    route "/user_info", :user_info
+    # route "/save_game", :save_game
+    # route "/recv", :action_recv
+    # route "/send", :action_send
 
     attr_accessor :data
 

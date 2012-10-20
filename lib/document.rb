@@ -1,4 +1,5 @@
 require 'active_support/inflector/methods'
+require 'json'
 
 module Jongoid
   module Document
@@ -9,9 +10,7 @@ module Jongoid
     def new_record?; !!@_mongo_data[:_id]; end
 
     def save
-      collection.drop
-
-      query = collection.find(_id: self.id)
+      query = collection.find(_id: self._id)
 
       record = query.first
 
@@ -20,7 +19,6 @@ module Jongoid
       else
         collection.insert(@_mongo_data)
       end
-      print "-- "+q.inspect+" -- " +@_mongo_data.inspect
     end
 
     def initialize(params = {})
@@ -38,6 +36,14 @@ module Jongoid
 
     def to_s
       inspect
+    end
+
+    def to_json(*a)
+      @_mongo_data.to_json(*a)
+    end
+
+    def to_hash
+      @_mongo_data
     end
 
     def method_missing(method, value = nil)
@@ -66,8 +72,10 @@ module Jongoid
         @fields[name] = opts
       end
 
-      def first(criteria)
-        data = collection.find(criteria).first
+      def first(criteria = {})
+        raise "Must be Hash" if not criteria.is_a?(Hash)
+
+        data = collection.where(criteria).first
         return nil unless data
         data = Jongoid::Document.symbolize_hash(data)
         doc = self.new data
@@ -75,11 +83,20 @@ module Jongoid
         doc
       end
 
-      def all(criteria)
-        raise "not implemented"
+      def all(criteria = {})
+        raise "Must be Hash" if not criteria.is_a?(Hash)
+        
+        datas = collection.where(criteria)
+        datas.map do |data|
+          sym_data = Jongoid::Document.symbolize_hash(data)
+          doc = self.new sym_data
+          doc._id = sym_data[:_id]
+          doc
+        end
       end
 
       def find(id)
+        raise "Must be String" if not id.is_a?(String)
         collection.find(_id: id).first
       end
 

@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    title Checkers
+    meta name="author" content="Zhomart"
+
+    link href="/css/bootstrap.min.css" rel="stylesheet"
+    link href="/css/bootstrap-responsive.min.css" rel="stylesheet"
+    link href="/stylus/style.css" rel="stylesheet"
+
+  body
+    .container-fluid
+      .row-fluid
+        .checkers.offset3
+
+    #sign_in.modal.hide.fade
+      .modal-header
+        button.close aria-hidden="true" data-dismiss="modal" type="button"
+        h3 Sign in
+      .modal-body
+        label for="username" Username:
+        input name="username" type="text" id="username"
+      .modal-footer
+        a#sign_in_button.btn.btn-success href="#" Login
+
+    script src="/js/jquery-1.8.2.js"
+    script src="/js/bootstrap.min.js"
+    script src="/coffee/main.js"

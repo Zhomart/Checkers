@@ -1,65 +1,65 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    activemodel (3.2.8)
-      activesupport (= 3.2.8)
-      builder (~> 3.0.0)
-    activesupport (3.2.8)
-      i18n (~> 0.6)
-      multi_json (~> 1.0)
-    backports (2.6.4)
-    builder (3.0.3)
-    daemons (1.1.9)
+    active_support (3.0.0)
+      activesupport (= 3.0.0)
+    activesupport (3.0.0)
+    addressable (2.3.2)
+    async-rack (0.5.1)
+      rack (~> 1.1)
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.3.3)
+    em-synchrony (1.0.2)
+      eventmachine (>= 1.0.0.beta.1)
+    em-websocket (0.3.8)
+      addressable (>= 2.1.1)
+      eventmachine (>= 0.12.9)
     eventmachine (1.0.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
-    grape (0.2.2)
-      activesupport
-      hashie (~> 1.2)
-      multi_json (>= 1.3.2)
-      multi_xml
-      rack
-      rack-accept
-      rack-mount
-      virtus
-    hashie (1.2.0)
-    i18n (0.6.1)
-    mongoid (3.0.9)
-      activemodel (~> 3.1)
-      moped (~> 1.1)
-      origin (~> 1.0)
-      tzinfo (~> 0.3.22)
+    goliath (1.0.0)
+      async-rack
+      em-synchrony (>= 1.0.0)
+      em-websocket
+      eventmachine (>= 1.0.0.beta.4)
+      http_parser.rb (= 0.5.3)
+      log4r
+      multi_json
+      rack (>= 1.2.2)
+      rack-contrib
+      rack-respond_to
+    http_parser.rb (0.5.3)
+    log4r (1.1.10)
     moped (1.2.7)
     multi_json (1.3.6)
-    multi_xml (0.5.1)
-    origin (1.0.9)
     rack (1.4.1)
-    rack-accept (0.4.5)
-      rack (>= 0.4)
-    rack-mount (0.8.3)
-      rack (>= 1.0.0)
-    shotgun (0.9)
-      rack (>= 1.0)
+    rack-accept-media-types (0.9)
+    rack-contrib (1.1.0)
+      rack (>= 0.9.1)
+    rack-respond_to (0.9.8)
+      rack-accept-media-types (>= 0.6)
+    slim (1.3.2)
+      temple (~> 0.5.0)
+      tilt (~> 1.3.3)
     stylus (0.6.2)
       execjs
       stylus-source
     stylus-source (0.29.0)
-    thin (1.5.0)
-      daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
-      rack (>= 1.0.0)
+    temple (0.5.4)
     tilt (1.3.3)
-    tzinfo (0.3.33)
-    virtus (0.5.2)
-      backports (~> 2.6.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  grape
-  mongoid
-  shotgun
+  active_support
+  coffee-script
+  em-synchrony
+  goliath
+  moped
+  rack
+  slim
   stylus
-  thin
   tilt

@@ -1,15 +1,19 @@
 source 'http://rubygems.org'
 
-gem "mongoid"
-
-gem "thin"
-
-# API versioning framework
-gem 'grape'
-
-# development only. It reloads source code
-gem "shotgun"
-
 gem "stylus"
 
 gem "tilt"
+
+gem "goliath"
+
+gem "rack"
+
+gem "em-synchrony"
+
+gem 'moped'
+
+gem 'coffee-script'
+
+gem 'slim'
+
+gem 'active_support'

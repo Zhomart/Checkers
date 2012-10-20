@@ -4,7 +4,7 @@ cell_size = 60px
   float left
   border 1px solid #111
   width cell_size * 8
-
+  position relative
 
 .checkers .cell
   float left
@@ -13,16 +13,47 @@ cell_size = 60px
   overflow hidden
   background-color #fafafa
 
-.checkers div:nth-child(-2n+8),
-.checkers div:nth-child(8) ~ div:nth-child(-2n+15),
-.checkers div:nth-child(16) ~ div:nth-child(-2n+24),
-.checkers div:nth-child(24) ~ div:nth-child(-2n+31),
-.checkers div:nth-child(32) ~ div:nth-child(-2n+40),
-.checkers div:nth-child(40) ~ div:nth-child(-2n+47),
-.checkers div:nth-child(48) ~ div:nth-child(-2n+56),
-.checkers div:nth-child(56) ~ div:nth-child(-2n+63) {
-    background-color: #333;
+.checkers .cell:nth-child(-2n+8),
+.checkers .cell:nth-child(8) ~ .cell:nth-child(-2n+15),
+.checkers .cell:nth-child(16) ~ .cell:nth-child(-2n+24),
+.checkers .cell:nth-child(24) ~ .cell:nth-child(-2n+31),
+.checkers .cell:nth-child(32) ~ .cell:nth-child(-2n+40),
+.checkers .cell:nth-child(40) ~ .cell:nth-child(-2n+47),
+.checkers .cell:nth-child(48) ~ .cell:nth-child(-2n+56),
+.checkers .cell:nth-child(56) ~ .cell:nth-child(-2n+63) {
+  background-color #333
 }
+
+.piece
+  border-radius cell_size*0.4
+  width cell_size*0.8 - 6px
+  height cell_size*0.8 - 6px
+  position absolute
+  border 3px solid #987
+  box-shadow 3px 3px 2px #333
+  background-color green
+
+.piece.black
+  background #bc9989
+  background -moz-radial-gradient(center, ellipse cover, #bc9989 9%, #ffffff 100%)
+  background -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(9%,#bc9989), color-stop(100%,#ffffff))
+  background -webkit-radial-gradient(center, ellipse cover, #bc9989 9%,#ffffff 100%)
+  background -o-radial-gradient(center, ellipse cover, #bc9989 9%,#ffffff 100%)
+  background -ms-radial-gradient(center, ellipse cover, #bc9989 9%,#ffffff 100%)
+  background radial-gradient(ellipse at center, #bc9989 9%,#ffffff 100%)
+
+.piece.white
+  background #5b5b5b
+  background -moz-radial-gradient(center, ellipse cover, #5b5b5b 24%, #131313 100%)
+  background -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(24%,#5b5b5b), color-stop(100%,#131313))
+  background -webkit-radial-gradient(center, ellipse cover, #5b5b5b 24%,#131313 100%)
+  background -o-radial-gradient(center, ellipse cover, #5b5b5b 24%,#131313 100%)
+  background -ms-radial-gradient(center, ellipse cover, #5b5b5b 24%,#131313 100%)
+  background radial-gradient(ellipse at center, #5b5b5b 24%,#131313 100%)
+
+.piece:hover
+  cursor pointer
+  // -webkit-transform scale(1.2)
 
 .b-red
   border 1px solid red

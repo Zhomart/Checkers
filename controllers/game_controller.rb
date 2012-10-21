@@ -77,7 +77,7 @@ class GameController < Controller
       receiver.resume nil
     end
 
-    ok_result game_id: game_id, opponent: game.user, number: 2
+    ok_result game_id: game._id, opponent: game.user, number: 2
   end
 
   def cancel_game
@@ -87,6 +87,39 @@ class GameController < Controller
       receiver = api_game_list_receivers.shift
       receiver.resume nil
     end
+  end
+
+  def game_info
+    raise "incorrect input data" if not (params['game_id'] || params['user_id'])
+    game = Game.find(params['game_id'])
+    board = game.user_board params['user_id']
+    raise "unknown user" if not board
+
+    # p "#{game.current_player} #{game.user_id} #{game.opponent_id} #{params['user_id']}"
+    # print board.map(&:to_s).join("\n")
+
+    ok_result :board => board, :current_player => game.current_player
+  end
+
+  def turn_done
+    game = Game.find params['game_id']
+    user = User.find params['user_id']
+
+    game.turn params['old'], params['new'], user
+
+    until api_opponent_turn_receivers.empty?
+      op = api_opponent_turn_receivers.shift
+      next if op[:game_id] != game._id
+      board = game.user_board op[:user_id]
+      op[:fiber].resume ok_result(board: board)
+    end
+
+    ok_result board: game.user_board(user)
+  end
+
+  def wait_for_opponents_turn
+    api_opponent_turn_receivers << { fiber: Fiber.current, game_id: params['game_id'], user_id: params['user_id'] }
+    Fiber.yield
   end
 
 private
@@ -117,4 +150,9 @@ private
   def api_opponent_receivers
     api_data['opponent_receivers'] ||= []
   end
+
+  def api_opponent_turn_receivers
+    api_data['opponent_turn_receivers'] ||= []
+  end
+
 end

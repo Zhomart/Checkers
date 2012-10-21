@@ -49,6 +49,9 @@ module Checkers
     route "/get_opponent", :get_opponent
     route "/cancel_game", :cancel_game
     route "/start_game", :start_game
+    route "/game_info", :game_info
+    route "/turn_done", :turn_done
+    route "/wait_for_opponents_turn", :wait_for_opponents_turn
 
     attr_accessor :data
 

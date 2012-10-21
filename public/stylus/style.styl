@@ -24,6 +24,9 @@ cell_size = 60px
   background-color #333
 }
 
+.checkers .cell.highlight
+  background-color #a55
+
 .piece
   border-radius cell_size*0.4
   width cell_size*0.8 - 6px
@@ -33,7 +36,7 @@ cell_size = 60px
   box-shadow 3px 3px 2px #333
   background-color green
 
-.piece.black
+.piece.white
   background #bc9989
   background -moz-radial-gradient(center, ellipse cover, #bc9989 9%, #ffffff 100%)
   background -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(9%,#bc9989), color-stop(100%,#ffffff))
@@ -42,7 +45,7 @@ cell_size = 60px
   background -ms-radial-gradient(center, ellipse cover, #bc9989 9%,#ffffff 100%)
   background radial-gradient(ellipse at center, #bc9989 9%,#ffffff 100%)
 
-.piece.white
+.piece.black
   background #5b5b5b
   background -moz-radial-gradient(center, ellipse cover, #5b5b5b 24%, #131313 100%)
   background -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(24%,#5b5b5b), color-stop(100%,#131313))
@@ -60,10 +63,3 @@ cell_size = 60px
 
 .game:hover
   cursor: pointer
-
-
-.b-red
-  border 1px solid red
-
-.b-green
-  border 1px solid green

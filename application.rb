@@ -46,9 +46,9 @@ module Checkers
     route "/game_list", :game_list
     route "/new_game", :new_game
     route "/user_info", :user_info
-    # route "/save_game", :save_game
-    # route "/recv", :action_recv
-    # route "/send", :action_send
+    route "/get_opponent", :get_opponent
+    route "/cancel_game", :cancel_game
+    route "/start_game", :start_game
 
     attr_accessor :data
 

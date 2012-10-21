@@ -9,14 +9,22 @@ html
     link href="/stylus/style.css" rel="stylesheet"
 
   body
-    #play_game.modal.hide.fade
-      .modal-header
-        / button.close aria-hidden="true" data-dismiss="modal" type="button"
-        h3 Play
-      .modal-body
-        .container-fluid
-          .row-fluid
-            .checkers.offset3
+    .nav
+
+    #play_game.hide
+      .container-fluid
+        .row-fluid
+          .span2.offset3
+            span#player_name.label.label-success Zhomart
+            | vs
+            span#opponent_name.label.label-info Azamat
+          .span4.offset1
+            span.btn.btn-danger Your turn
+        .row-fluid
+          .span5.offset3
+            hr
+        .row-fluid
+          .checkers.offset3
 
     #sign_in.modal.hide.fade
       .modal-header
@@ -50,6 +58,14 @@ html
       .modal-footer
         button.btn data-dismiss="modal" aria-hidden="true" Cancel
         a#create_game_button.btn.btn-primary href="#" Create Game
+
+    #wait_for_opponent.modal.hide.fade
+      .modal-header
+        h3 Waiting for opponent
+      .modal-body
+        | Please, be patient
+      .modal-footer
+        button.btn.cancel_game data-dismiss="modal" aria-hidden="true" Cancel
 
     script src="/js/jquery-1.8.2.js"
     script src="/js/bootstrap.min.js"

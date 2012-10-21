@@ -1,18 +1,4 @@
 class GameController < Controller
-  # def action_send
-  #   until api_receivers.empty? do
-  #     receiver = api_receivers.shift
-  #     receiver.resume('ololo')
-  #   end
-  #   'sent )'
-  # end
-
-  # def action_recv
-  #   api_receivers << Fiber.current
-
-  #   Fiber.yield
-  # end
-
   def sign_in
     name = params['username']
     username = params['username'].strip[0..12].downcase
@@ -44,28 +30,73 @@ class GameController < Controller
     game.init_board
     game.save
 
-    until api_game_list_receivers.empty? do
-      receiver = api_game_list_receivers.shift
-      receiver.resume game
-    end
-    
-    ok_result game: game
+    ok_result game_id: game._id
   end
 
   def game_list
-    return Game.all if params['all'] == 'true'
+    return available_games if params['all'] == 'true'
 
     api_game_list_receivers << Fiber.current
     Fiber.yield
 
-    Game.all
+    available_games
   end
 
   def user_info
     ok_result user: User.find(_id: params['_id'])
   end
 
+  def get_opponent
+    api_opponent_receivers << { fiber: Fiber.current, user_id: params['user_id'], game_id: params['game_id']}
+
+    until api_game_list_receivers.empty? do
+      receiver = api_game_list_receivers.shift
+      receiver.resume nil
+    end
+
+    ok_result opponent: Fiber.yield, number: 1
+  end
+
+  def start_game
+    game = Game.find(params['game_id'])
+    user = User.find(params['user_id'])
+
+    opponent = api_opponent_receivers.detect{|o| o[:game_id] == game._id }
+
+    return error_result 'game not found' if not opponent
+
+    game.opponent_id = user._id
+    game.save
+
+    opponent[:fiber].resume user
+
+    api_opponent_receivers.delete opponent
+
+    until api_game_list_receivers.empty? do
+      receiver = api_game_list_receivers.shift
+      receiver.resume nil
+    end
+
+    ok_result game_id: game_id, opponent: game.user, number: 2
+  end
+
+  def cancel_game
+    api_opponent_receivers.delete_if{|r| r[:game_id] == params['game_id']}
+
+    until api_game_list_receivers.empty? do
+      receiver = api_game_list_receivers.shift
+      receiver.resume nil
+    end
+  end
+
 private
+  def available_games
+    games = Game.all.select do |game|
+      api_opponent_receivers.detect{|r| r[:game_id] == game._id }
+    end
+    games.map{|g| {_id: g._id, title: g.title, username: g.user.name } }
+  end
+
   def make_result(status, other_data_or_message)
     return {result: 'ok'}.merge(other_data_or_message).to_json if status
     { result: 'error', message: other_data_or_message }.to_json
@@ -81,5 +112,9 @@ private
 
   def api_game_list_receivers
     api_data['game_list_receivers'] ||= []
+  end
+
+  def api_opponent_receivers
+    api_data['opponent_receivers'] ||= []
   end
 end

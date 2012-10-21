@@ -97,7 +97,7 @@ module Jongoid
 
       def find(id)
         raise "Must be String" if not id.is_a?(String)
-        collection.find(_id: id).first
+        first(_id: id)
       end
 
     end

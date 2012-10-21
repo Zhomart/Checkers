@@ -7,6 +7,13 @@ class Game
   field :board
   field :current_player
 
+  field :opponent_id
+
+  def get_number user_or_id
+    user_or_id = user_or_id._id if user_or_id.is_a(User)
+    user_or_id == user_or_id ? 1 : 2
+  end
+
   def init_board
     self.board = 8.times.map{Array.new(8, 0)}
 

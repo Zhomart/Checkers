@@ -176,6 +176,8 @@ $ ->
     return false if piece_exists(new_state)
     return true if x - 1 == wx and y - 1 == wy
     return true if x + 1 == wx and y - 1 == wy
+    return true if x - 2 == wx and y - 2 == wy and $.chess.board[y - 1][x - 1] == 3 - $.chess.board[y][x]
+    return true if x + 2 == wx and y - 2 == wy and $.chess.board[y - 1][x + 1] == 3 - $.chess.board[y][x]
     return false
 
   highlight_available_cells = (highlight, $piece) ->
@@ -184,6 +186,12 @@ $ ->
     else
       [x, y] = get_xy $piece
       return if y == 0
+      if possible_to_go([x, y], [x - 2, y - 2])
+        n = (y - 2)*8 + x - 2
+        $(".cell:nth(#{n})").addClass('highlight')
+      if possible_to_go([x, y], [x + 2, y - 2])
+        n = (y - 2)*8 + x + 2
+        $(".cell:nth(#{n})").addClass('highlight')
       if possible_to_go([x, y], [x - 1, y - 1])
         n = (y - 1)*8 + x - 1
         $(".cell:nth(#{n})").addClass('highlight')
@@ -203,7 +211,7 @@ $ ->
 
   initDragging = ->
     $("body").on "mousemove", (e) ->
-      if $.chess.dragging
+      if $.chess.dragging != null
         mx = e.pageX - $.chess.dragging.parent().offset().left
         my = e.pageY - $.chess.dragging.parent().offset().top
 
@@ -232,9 +240,6 @@ $ ->
           $.chess.old_state = get_xy($(e.target))
           highlight_available_cells(true, $(e.target))
           $.chess.dragging = $(e.target)
-      # $.chess.old_state = get_xy($(e.target))
-      # highlight_available_cells(true, $(e.target))
-      # $.chess.dragging = $(e.target)
       return false
 
     $(document.body).on "mouseup", (e) ->
@@ -256,7 +261,7 @@ $ ->
           else
             alert(data.message)
 
-        $.chess.dragging = null
+      $.chess.dragging = null
 
   initBoard = ->
     $(".checkers").html ''
@@ -273,21 +278,4 @@ $ ->
 
   sign_in()
 
-  # $('#play_game').show()
-
-  # $(".checkers").append $("<div>",
-  #   class: "piece black"
-  #   style: "left: #{5+60*4}px; top: #{5+60*2}px"
-  #   "data-number" : -1
-  # )
-
   initDragging()
-
-  # $(".checkers").append $("<div>",
-  #   class: "piece white"
-  #   style: "left: 5px; top: 5px"
-  # )
-  # $(".checkers").append $("<div>",
-  #   class: "piece black"
-  #   style: "left: 65px; top: 5px"
-  # )

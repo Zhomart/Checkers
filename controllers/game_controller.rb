@@ -95,9 +95,6 @@ class GameController < Controller
     board = game.user_board params['user_id']
     raise "unknown user" if not board
 
-    # p "#{game.current_player} #{game.user_id} #{game.opponent_id} #{params['user_id']}"
-    # print board.map(&:to_s).join("\n")
-
     ok_result :board => board, :current_player => game.current_player
   end
 

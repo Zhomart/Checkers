@@ -48,23 +48,32 @@ class Game
   end
 
   def turn(piece_old, piece_new, user)
-    piece_new.map!(&:to_i).reverse!
-    piece_old.map!(&:to_i).reverse!
-
-    p "#{user_id.inspect} == #{user._id.inspect}"
+    piece_new.map!(&:to_i)
+    piece_old.map!(&:to_i)
 
     if self.user_id == user._id
       piece_old.map!{|p| 7 - p } 
       piece_new.map!{|p| 7 - p }
     end
 
-    p "#{piece_old} -> #{piece_new}  (#{board[piece_old[0]][piece_old[1]]})"
+    ox, oy = piece_old
+    x, y = piece_new
 
-    print board.map(&:join).join("\n")
-    print "\n"
+    if (x-ox).abs != 1 && (y-oy).abs != 1
+      return false if (x-ox).abs != 2 && (y-oy).abs != 2
+    end
 
-    board[piece_new[0]][piece_new[1]] = board[piece_old[0]][piece_old[1]]
-    board[piece_old[0]][piece_old[1]] = 0
+    if (x-ox).abs == 2 && (y-oy).abs == 2
+      cx = (x+ox) / 2
+      cy = (y+oy) / 2
+
+      return false if board[cy][cx] != 3 - board[oy][ox]
+
+      board[cy][cx] = 0
+    end
+
+    board[y][x] = board[oy][ox]
+    board[oy][ox] = 0
 
     self.save
   end

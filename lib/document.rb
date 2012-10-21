@@ -85,7 +85,7 @@ module Jongoid
 
       def all(criteria = {})
         raise "Must be Hash" if not criteria.is_a?(Hash)
-        
+
         datas = collection.where(criteria)
         datas.map do |data|
           sym_data = Jongoid::Document.symbolize_hash(data)

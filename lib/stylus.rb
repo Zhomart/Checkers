@@ -13,7 +13,6 @@ module Zhomart
       if path =~ /stylus\/(.*)\.css$/
         file_path = "stylus/#{$1}.styl"
         css = Stylus.compile(File.new(File.join(@root, file_path)))
-        p "css"
         [200,
         {"Last-Modified"=>Time.now.to_s,
           "Content-Type"=>"text/css", "Content-Length"=>css.size.to_s}, [css]]

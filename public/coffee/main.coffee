@@ -15,8 +15,8 @@ $ ->
     $('#select_game').modal {backdrop: false, show: false}
     $('#new_game').modal {show: false}
 
-    $('#wait_for_opponent').on 'click', '.cancel_game', ->
-      $.get '/cancel_game', {game_id: $.chess.game._id}
+    $('#wait_for_opponent').on 'hidden', ->
+      $.get '/cancel_game', {game_id: $.chess.game_id}
 
     $('#new_game').on 'hidden', ->
       $('#select_game').modal 'show'
@@ -31,6 +31,7 @@ $ ->
       if gametitle.length < 3
         return alert('Title is too short')
 
+      console.log 'creating the game'
       $.post "/new_game", {user_id: $.chess.user._id, title: gametitle}, (data) ->
         data = $.parseJSON data
         if data.result == "ok"
@@ -49,6 +50,7 @@ $ ->
           alert(data.message)
 
     $('body').on 'click', '.game', ->
+      console.log "clicked"
       game_id = $(this).attr 'data-id'
 
       $.get '/start_game', {user_id: $.chess.user._id, game_id: game_id}, (data) ->
